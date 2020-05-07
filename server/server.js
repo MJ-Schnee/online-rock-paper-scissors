@@ -14,11 +14,16 @@ const server = http.createServer(app); // Register express as the listener for t
 
 const io = socketio(server); // Turns on realtime client-server communication
 
-io.on("connection", socket => {
-    socket.emit("message", "Connected to rock-paper-scissors game");
+io.on("connection", (socket) => {
+    console.log("A user has connected");
+    socket.emit("message", "Connected to rock-paper-scissors game"); // Send a message to the current client connected
+
+    socket.on("message", (text) => {
+        io.emit("message", text); // Sends a message to every client
+    });
 });
 
-server.on("error", err => {
+server.on("error", (err) => {
     console.error(`Server error: ${err}`);
 });
 
