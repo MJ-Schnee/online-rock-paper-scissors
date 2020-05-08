@@ -3,10 +3,13 @@ const writeEvent = (text) => {
     const parent = document.querySelector("#events");
 
     // Creates <li> element
-    const el = document.createElement("li");
+    let el = document.createElement("li");
     el.innerHTML = text;
 
     parent.appendChild(el);
+
+    // Keeps the chat scrolled to the bottom when updated
+    parent.scrollTop = parent.scrollHeight - parent.clientHeight;
 };
 
 // Lets the players use the chat
