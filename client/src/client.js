@@ -9,9 +9,7 @@ const writeEvent = (text) => {
     parent.appendChild(el);
 };
 
-writeEvent('Welcome to Rock Paper Scissors');
-
-
+// Lets the players use the chat
 const onFormSubmitted = (event) => {
     event.preventDefault(); // Stops browser from reloading the page
 
@@ -22,7 +20,21 @@ const onFormSubmitted = (event) => {
     socket.emit("message", text);
 };
 
+// Adds listeners to each of the buttons
+// When a button is clicked, let the server know they selected that move
+const addButtonListeners = () => {
+    ["rock", "paper", "scissors"].forEach( (id) => {
+        const button = document.getElementById(id);
+        button.addEventListener("click", () => {
+            socket.emit("move", id);
+        });
+    });
+};
+
+writeEvent('Welcome to Rock Paper Scissors');
+
 const socket = io(); // Global variable to allow client to access the socket
 socket.on("message",  writeEvent); // Whenever a message is passed on the socket, alert the client
 
 document.querySelector("#chat-form").addEventListener("submit", onFormSubmitted);
+addButtonListeners();

@@ -64,10 +64,6 @@ button:hover {
     padding: 10px 10px 10px 10px;
 }
 
-#events li:nth-child(odd) {
-    background-color: lightgrey;
-}
-
 .chat-wrapper {
     padding: 10px;
 }
