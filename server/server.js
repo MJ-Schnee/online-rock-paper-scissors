@@ -4,6 +4,8 @@ const socketio = require('socket.io'); // function to allow realtime communicati
 
 const app = express(); // Object and function, handled by express
 
+const RockPaperScissorsGame = require("./rps-game-logic"); // Lets us create new games
+
 // Gets the path of the client application from the root directory
 const clientPath = `${__dirname}/../client`;
 console.log(`Serving static from ${clientPath}`);
@@ -14,12 +16,28 @@ const server = http.createServer(app); // Register express as the listener for t
 
 const io = socketio(server); // Turns on realtime client-server communication
 
-io.on("connection", (socket) => {
-    console.log("A user has connected");
-    socket.emit("message", "Connected to rock-paper-scissors game"); // Send a message to the current client connected
+let waitingPlayer = null; // Waiting player is initialized to null because there is no one on the server
 
+io.on("connection", (socket) => {
+    
+    // Once a player has connected, check if there is there are other connected players
+    // If there aren't, waitingPlayer will be null
+    if (waitingPlayer) {
+        // Create a new Rock Paper Scissors game with the two new players
+        new RockPaperScissorsGame(waitingPlayer, socket);
+
+        // No more waiting players since a game has started
+        waitingPlayer = null;
+    }
+    // If there is no other waiting player but someone has connected, we can say that the waiting player is a new socket
+    else {
+        waitingPlayer = socket;
+        waitingPlayer.emit("message", "Waiting for another player...");
+    }
+
+    // Whenever a socket sends a message, send it across the entire server
     socket.on("message", (text) => {
-        io.emit("message", text); // Sends a message to every client
+        io.emit("message", text);
     });
 });
 
