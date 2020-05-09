@@ -1,0 +1,38 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Simple online rock-paper-scissors text game",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MJ-Schnee/online-rock-paper-scissors.git"
+  },
+  "keywords": [
+    "Multiplayer",
+    "Game",
+    "Socket.IO",
+    "node.js"
+  ],
+  "author": "MJ Schnee <MJaSchnee@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MJ-Schnee/online-rock-paper-scissors/issues"
+  },
+  "homepage": "https://github.com/MJ-Schnee/online-rock-paper-scissors#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.3"
+  },
+  "engines": {
+    "node": "10.15.3"
+  }
+}
